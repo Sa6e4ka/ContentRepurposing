@@ -1,0 +1,3 @@
+time_length=59
+min_video_count=2
+compilation_count=2
