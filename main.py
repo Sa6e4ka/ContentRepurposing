@@ -1,14 +1,14 @@
-from Get_Videos import get_users_videos
-from Video_Making import process_video
+from Scrapping import get_users_videos
+from VideoMaking import process_video
 from Helps import create_dirs
 from Loggs import logger
 
-from YouTube_Deploy import create_secrerts, youtube, authenticate_youtube
+from YouTube import create_secrerts, youtube, authenticate_youtube, get_publish_times
 from Gemini import authenticate_gemini, generate 
 
 import os
+import datetime
 
-# import argparse
 
 client_id = os.environ.get("GOOGLE_CLIENT_ID")
 client_secret = os.environ.get("GOOGLE_CLIENT_SECRETS")
@@ -42,9 +42,13 @@ def main():
     # Получение словаря с видео автора {"video_id" : "duration"}
     ids_dict = get_users_videos(username=username, offset="max")
     video_names = process_video(data=ids_dict, username=username)
-    
-    print(video_names)
-    for enum, video_name in enumerate(video_names):
+
+    start_time = datetime.utcnow()
+    num_videos = len(video_names)
+    publish_times = get_publish_times(start_time, num_videos)
+
+
+    for enum, (video_name, publish_time) in enumerate(zip(video_names, publish_times)):
         title = generate(credentials=gemini)
         youtube(
             name=video_name,
@@ -62,7 +66,7 @@ def main():
                 "memevideo",
                 "laugh"
             ],
-            publishat="2024-08-18T11:19:27.0Z", #НЕ ЗАБУДЬ ВЫСТАВИТЬ ДАТУ
+            publishat=publish_time, #"2024-08-18T11:19:27.0Z"
             credentials=youtube_auth   
         )
     

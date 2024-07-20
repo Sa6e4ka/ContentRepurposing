@@ -13,6 +13,7 @@ def process_video(data: dict, username: str) -> None:
     """
     
     ids = [idd for idd in data]
+    print(ids)
     length = len(data)
     # Список для списков компилируемых видео 
     paths = []

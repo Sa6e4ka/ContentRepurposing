@@ -11,7 +11,6 @@ from Loggs import logger
 CLIENT_SECRETS_FILE = "jsons/client_secret.json"
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
-
 # Функция для получения авторизованного сервиса YouTube API
 def authenticate_youtube():
     credentials = None
