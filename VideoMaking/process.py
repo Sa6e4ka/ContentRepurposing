@@ -13,7 +13,6 @@ def process_video(data: dict, username: str) -> None:
     """
     
     ids = [idd for idd in data]
-    print(ids)
     length = len(data)
     # Список для списков компилируемых видео 
     paths = []
@@ -46,19 +45,17 @@ def process_video(data: dict, username: str) -> None:
 
         paths.append(compile_path)
 
-    print(paths)
     video_names = []
 
     for k, item_list in enumerate(paths):
         name_list = download_video(data=item_list)
 
         name = f"output/{username}_{k}.mp4"
+        print(name)
         video_names.append(name)
 
         merge_videos(video_paths=name_list, output_dir=name)
         remove()
-
-    print(video_names)
     return video_names
 
 

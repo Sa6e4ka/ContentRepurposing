@@ -2,7 +2,7 @@ from googleapiclient.http import MediaFileUpload
 from Loggs import logger
 
 
-def upload_video(youtube, file, title, description, tags, publ):
+def upload_video(youtube, file, title, description, publ):
     '''
     Функция исключительно для #загрузки# видео на YouTube
     '''
@@ -11,7 +11,18 @@ def upload_video(youtube, file, title, description, tags, publ):
         'snippet': {
             'title': title,
             'description': description,
-            'tags': tags,
+            'tags': [
+                "memes", 
+                "funny", 
+                "dank memes", 
+                "lol",
+                "hilarious", 
+                "viral", 
+                "trending", 
+                "lmao",
+                "memevideo",
+                "laugh"
+            ],
         },
         'status': {
             'privacyStatus': 'private',
@@ -19,12 +30,11 @@ def upload_video(youtube, file, title, description, tags, publ):
         }
     }
     media_file = MediaFileUpload(file)
-    response_upload = youtube.videos().insert(
+    youtube.videos().insert(
         part='snippet,status',
         body=request_body,
         media_body=media_file
     ).execute()
 
-    logger.info("Video id '%s' was successfully uploaded." % response_upload["id"])
 
 

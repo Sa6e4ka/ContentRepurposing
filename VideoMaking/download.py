@@ -45,9 +45,3 @@ def download_single(vid: str):
     except network_exceptions or HTTPError or DownloadError as e: # В случае ошибки программа падает и хз ваще как это исправить :/
         print(f"Произошла ошибка при скачивании видео: {e}")
     
-'''
-Пример вызова функции
-'''
-if __name__ == "__main__":
-#   download_video(data=...)
-    download_single(vid="7340324187547962667")
